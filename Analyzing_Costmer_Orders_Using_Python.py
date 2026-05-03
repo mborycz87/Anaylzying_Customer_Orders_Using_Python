@@ -70,3 +70,38 @@ for name, spent in customer_spending.items():
     else:
         customer_value = "low-value buyer"
     print(f"The customer {name} spent ${spent:,.2f}. Making them a {customer_value} customer.")
+
+# Calculate the total revenue per product category and store it in a dictionary
+print("Calculate the total revenue per product category and store it in a dictionary.\n")
+revenue_per_category ={}
+for name, product, price, category in orders:
+    revenue_per_category[category] = revenue_per_category.get(category, 0) + price
+
+for categorys, cost in revenue_per_category.items():
+    print(f"The {categorys} category made a total of ${cost:,.2f} in revenue.") 
+
+# Extract unique products from all orders using a set
+print("\nExtract unique products from all orders using a set.\n")
+unique_products = set()
+for name, product, price, category in orders:
+    unique_products.add(product)
+for products in unique_products:
+    print(f"One unique product is: {products}")
+    
+# Use a list comprehension to find all customers who purchased electronics
+print("\nUse a list comprehension to find all customers who purchased electronics\n")
+electronics_buyers = []
+for name, product, price, category in orders:
+    if category == "Electronics":
+        electronics_buyers.append(name)
+for buyer in electronics_buyers:
+    print(f"{buyer} bought electronics.")
+
+# Identify the top three highest-spending customers using sorting
+print("\nIdentify the top three highest-spending customers using sorting\n")
+top_three_buyers = sorted(customer_spending.items(), key=lambda x: x[1], reverse = True)
+counter = 1
+for buyers in top_three_buyers:
+    if counter <= 3:
+        print(f"{buyers[0]} is the number {counter} customer.")
+        counter += 1
