@@ -105,3 +105,52 @@ for buyers in top_three_buyers:
     if counter <= 3:
         print(f"{buyers[0]} is the number {counter} customer.")
         counter += 1
+
+# Print a summary of each customer’s total spending and their classification
+print("Print a summary of each customer’s total spending and their classification\n")
+for key, value in customer_spending.items():
+    str_1 = (f"{key} spent ${value:,.2f}")
+    if value > 100:
+        customer_value = "high-value buyer"
+    elif 50 <= value <= 100:
+        customer_value = "moderate buyer"
+    else:
+        customer_value = "low-value buyer"
+    str_2 = str_1 + (f" they are a {customer_value}")
+    print(str_2)
+        
+
+# Use set operations to find customers who purchased from multiple categories 
+print("\nUse set operations to find customers who purchased from multiple categories\n")
+
+customer_categories = {}
+for name, product, price, category in orders:
+    if name not in customer_categories:
+        customer_categories[name] = set()
+    customer_categories[name].add(category)
+
+multi_category_buyers = {
+    name for name, categories in customer_categories.items() 
+    if len(categories) > 1
+}
+
+print(f" The customers who bought form multiple categories are: {multi_category_buyers}")
+# Identify common customers who bought both electronics and clothing 
+print("\nIdentify common customers who bought both electronics and clothing \n")
+
+# Filter and isolate Clothing customers
+clothing_fans = {
+    name 
+    for name, product, price, category in orders 
+    if category == "Clothing"
+}
+
+# Perform the intersection to find common customers
+common_customers = electronics_fans.intersection(clothing_fans)
+
+# Display the results clearly
+if common_customers:
+    for customer in common_customers:
+        print(f"Customer '{customer}' purchased from both Electronics and Clothing.")
+else:
+    print("No common customers found between these categories.")
